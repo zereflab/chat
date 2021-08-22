@@ -48,7 +48,7 @@ class Message extends BaseModel
     {
         $participantModel = $this->participation->messageable;
         
-        if (!isset($participantModel)){
+        if (!isset($participantModel)) {
                 return null;
         }
 
