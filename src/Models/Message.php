@@ -48,6 +48,10 @@ class Message extends BaseModel
     {
         $participantModel = $this->participation->messageable;
 
+        if (!isset($participantModel)) {
+            return null;
+        }
+
         if (method_exists($participantModel, 'getParticipantDetails')) {
             return $participantModel->getParticipantDetails();
         }
