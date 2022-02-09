@@ -34,6 +34,18 @@ class MessageWasSent extends Event implements ShouldBroadcast
 
     public function broadcastWith()
     {
+        
+         $receiver_name = null;
+        $receiver_dp = null;
+
+        if($this->message->sender::class == 'App\Models\User'){
+            $receiver_name = $this->message->sender->fullname();
+            $receiver_dp = $this->message->sender->user_dp();
+        }elseif($this->message->sender::class == 'App\Models\Admin'){
+            $receiver_name = $this->message->sender->name;
+            $receiver_dp = $this->message->sender->admin_dp();
+        }
+        
         return [
             'message' => [
                 'id'              => $this->message->getKey(),
@@ -42,6 +54,8 @@ class MessageWasSent extends Event implements ShouldBroadcast
                 'type'            => $this->message->type,
                 'created_at'      => $this->message->created_at,
                 'sender'          => $this->message->sender,
+                'receiver_name'   => $receiver_name,
+                'receiver_dp'     => $receiver_dp
             ],
         ];
     }
